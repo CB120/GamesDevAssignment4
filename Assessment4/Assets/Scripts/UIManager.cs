@@ -11,7 +11,11 @@ public class UIManager : MonoBehaviour
 
     public void LoadFirstLevel()
     {
-        SceneManager.LoadScene(1);
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
+        {
+            SceneManager.LoadScene(1);
+        }
+        
         
     }
     // Start is called before the first frame update
@@ -23,6 +27,9 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            LoadFirstLevel();
+        }
     }
 }
