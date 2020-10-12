@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private bool Mute;
+    public Image Muted;
 
     public void LoadFirstLevel()
     {
@@ -20,10 +21,15 @@ public class UIManager : MonoBehaviour
             
     }
 
+    
+
     public void ToggleAudio()
-    {
+    {   
+        
         Mute = !Mute;
         AudioListener.pause = Mute;
+
+        
     }
 
 
@@ -32,6 +38,7 @@ public class UIManager : MonoBehaviour
     {
         //DontDestroyOnLoad(gameObject);
         Mute = false;
+
     }
 
     // Update is called once per frame
@@ -41,5 +48,7 @@ public class UIManager : MonoBehaviour
         {
             LoadFirstLevel();
         }
+
+        
     }
 }
