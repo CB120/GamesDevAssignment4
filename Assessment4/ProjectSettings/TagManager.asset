@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - MuteTag
+  - LevelOne
+  - LevelTwo
+  - Exit
   layers:
   - Default
   - TransparentFX

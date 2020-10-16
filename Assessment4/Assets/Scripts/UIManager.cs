@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     private bool Mute;
     public Image Muted;
 
-    public void LoadFirstLevel()
+    public void LoadMenuScreen()
     {
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
         {
@@ -21,9 +21,27 @@ public class UIManager : MonoBehaviour
             
     }
 
+    public void LoadLevelOne()
+    {
+        SceneManager.LoadScene(2);
+    }
+    
+    
+  
+
     
 
-    public void ToggleAudio()
+    public void LoadLevelTwo()
+    {
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+        {
+
+            SceneManager.LoadScene(3);
+        }
+    }
+
+
+        public void ToggleAudio()
     {   
         
         Mute = !Mute;
@@ -41,14 +59,27 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void OnSceneLoaded(Scene scene)
+    {
+        if (scene.buildIndex == 1)
+        {
+            Button btn1 = GameObject.FindGameObjectWithTag("LevelOne").GetComponent<Button>();
+            btn1.onClick.AddListener(LoadLevelOne);
+
+            Button btn2 = GameObject.FindGameObjectWithTag("LevelTwo").GetComponent<Button>();
+            btn2.onClick.AddListener(LoadLevelTwo);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            LoadFirstLevel();
+            LoadMenuScreen();
         }
 
+        
         
     }
 }
