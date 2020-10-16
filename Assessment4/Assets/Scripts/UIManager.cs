@@ -26,28 +26,20 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(2);
     }
     
-    
-  
-
-    
-
     public void LoadLevelTwo()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
-        {
-
-            SceneManager.LoadScene(3);
-        }
+        SceneManager.LoadScene(3);
     }
-
+    
+    public void ExitGame()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
+    }
 
         public void ToggleAudio()
     {   
-        
         Mute = !Mute;
-        AudioListener.pause = Mute;
-
-        
+        AudioListener.pause = Mute; 
     }
 
 
@@ -68,6 +60,9 @@ public class UIManager : MonoBehaviour
 
             Button btn2 = GameObject.FindGameObjectWithTag("LevelTwo").GetComponent<Button>();
             btn2.onClick.AddListener(LoadLevelTwo);
+
+            Button btn3 = GameObject.FindGameObjectWithTag("Exit").GetComponent<Button>();
+            btn3.onClick.AddListener(ExitGame);
         }
     }
 
