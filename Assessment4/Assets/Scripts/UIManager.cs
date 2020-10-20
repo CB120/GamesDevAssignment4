@@ -17,11 +17,7 @@ public class UIManager : MonoBehaviour
     public Text timer;
     public void LoadMenuScreen()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
-        {
-            SceneManager.LoadScene(1);
-        }
-            
+            SceneManager.LoadScene(1);    
     }
 
     public void LoadLevelOne()
@@ -77,7 +73,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
         {
             LoadMenuScreen();
         }
