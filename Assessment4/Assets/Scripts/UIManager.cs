@@ -64,6 +64,8 @@ public class UIManager : MonoBehaviour
             Button btn3 = GameObject.FindGameObjectWithTag("Exit").GetComponent<Button>();
             btn3.onClick.AddListener(ExitGame);
         }
+
+        
     }
 
     // Update is called once per frame
@@ -74,6 +76,7 @@ public class UIManager : MonoBehaviour
             LoadMenuScreen();
         }
 
+        
         
         
     }
