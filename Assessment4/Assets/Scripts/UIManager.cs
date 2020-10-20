@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     public void LoadLevelOne()
     {
         SceneManager.LoadScene(2);
+        
     }
     
     public void LoadLevelTwo()
@@ -80,18 +81,20 @@ public class UIManager : MonoBehaviour
         {
             LoadMenuScreen();
         }
-
-        if (gameObject == GameObject.FindGameObjectWithTag("Score")) // This fixed a nullReference error. There is probs a more efficient way to do this lol
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(2))
         {
-            score.text = "Score: " + ScoreValue;
-        }
+            if (gameObject == GameObject.FindGameObjectWithTag("Score")) // This fixed a nullReference error. There is probs a more efficient way to do this lol
+            {
+                score.text = "Score: " + ScoreValue;
+            }
 
-        if (gameObject == GameObject.FindGameObjectWithTag("Timer"))
-        {
-            minutes = (int)(Time.time / 60f);
-            seconds = (int)(Time.time % 60f);
-            milliseconds = (int)(Time.time * 100f);
-            timer.text = minutes.ToString("00") + ":" + seconds.ToString("00") + ":" + milliseconds.ToString("00");
+            if (gameObject == GameObject.FindGameObjectWithTag("Timer"))
+            {
+                minutes = (int)(Time.timeSinceLevelLoad / 60f);
+                seconds = (int)(Time.timeSinceLevelLoad % 60f);
+                milliseconds = (int)(Time.timeSinceLevelLoad * 1000f) % 1000;
+                timer.text = minutes.ToString("00") + ":" + seconds.ToString("00") + ":" + milliseconds.ToString("00");
+            }
         }
         // FIX THIS ALL UP PLEASE
        
