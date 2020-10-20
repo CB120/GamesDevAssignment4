@@ -10,6 +10,8 @@ TagManager:
   - Exit
   - Arena
   - Pellet
+  - Score
+  - Timer
   layers:
   - Default
   - TransparentFX

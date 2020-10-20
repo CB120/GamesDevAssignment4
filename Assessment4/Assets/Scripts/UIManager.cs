@@ -11,7 +11,10 @@ public class UIManager : MonoBehaviour
 {
     private bool Mute;
     public Image Muted;
-
+    public static int ScoreValue = 0;
+    public float minutes, seconds, milliseconds;
+    public Text score;
+    public Text timer;
     public void LoadMenuScreen()
     {
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
@@ -42,13 +45,15 @@ public class UIManager : MonoBehaviour
         AudioListener.pause = Mute; 
     }
 
+    
 
     // Start is called before the first frame update
     void Start()
     {
         //DontDestroyOnLoad(gameObject);
         Mute = false;
-
+        score = GetComponent<Text>();
+        timer = GetComponent<Text>();
     }
 
     public void OnSceneLoaded(Scene scene)
@@ -76,8 +81,20 @@ public class UIManager : MonoBehaviour
             LoadMenuScreen();
         }
 
-        
-        
-        
+        if (gameObject == GameObject.FindGameObjectWithTag("Score")) // This fixed a nullReference error. There is probs a more efficient way to do this lol
+        {
+            score.text = "Score: " + ScoreValue;
+        }
+
+        if (gameObject == GameObject.FindGameObjectWithTag("Timer"))
+        {
+            minutes = (int)(Time.time / 60f);
+            seconds = (int)(Time.time % 60f);
+            milliseconds = (int)(Time.time * 100f);
+            timer.text = minutes.ToString("00") + ":" + seconds.ToString("00") + ":" + milliseconds.ToString("00");
+        }
+        // FIX THIS ALL UP PLEASE
+       
+
     }
 }
