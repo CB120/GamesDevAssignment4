@@ -12,6 +12,7 @@ TagManager:
   - Pellet
   - Score
   - Timer
+  - Cherry
   layers:
   - Default
   - TransparentFX

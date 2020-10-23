@@ -7,20 +7,22 @@ public class CherryController : MonoBehaviour
     public GameObject Computer;
     private float SpawnTime = 30f;
     private float moveSpeed = 2f;
+    private float lifetime = 31f;
     
     //public Transform Spawn;
     
     void SpawnComputer()
     {
         GameObject Cherry = Instantiate(Computer) as GameObject;
-        Cherry.transform.position = new Vector2(60, -2.5f);
+        Cherry.name = Computer.name;
+        Cherry.transform.position = new Vector2(35, -2.5f);
         
     }
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("SpawnComputer", SpawnTime, SpawnTime);
-
+        Destroy(Computer, lifetime);
     }
 
 
