@@ -13,6 +13,7 @@ public class PacStudentController : MonoBehaviour
     private Animator anim;
     private AudioSource PacMove;
     public ParticleSystem PlayerParticle;
+    public GameObject Wall;
 
     private void CheckLastInput() // I wish this would work. :(
     {
@@ -20,14 +21,14 @@ public class PacStudentController : MonoBehaviour
         {
             //lastInput = Event.current.keyCode;*/
             Debug.Log(lastInput);
-            
+
         }
     }
 
     private void PacMoveAudio()
-    { 
-            PacMove.loop = true;
-            PacMove.Play();
+    {
+        PacMove.loop = true;
+        PacMove.Play();
     }
 
 
@@ -42,10 +43,10 @@ public class PacStudentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         if (Input.GetKeyDown(KeyCode.D))
         {
-            
+
             endPoint = transform.position + new Vector3(TileSize.x, 0, 0);
             StartCoroutine(Move());
             lastInput = KeyCode.D;
@@ -58,14 +59,14 @@ public class PacStudentController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            
+
             endPoint = transform.position + new Vector3(-TileSize.x, 0, 0);
             StartCoroutine(Move());
             lastInput = KeyCode.A;
             PacMoveAudio();
             PacStudentDust();
         }
-        
+
         if (Input.GetKeyDown(KeyCode.W))
         {
             endPoint = transform.position + new Vector3(0, TileSize.y, 0);
@@ -92,39 +93,40 @@ public class PacStudentController : MonoBehaviour
             lastInput = KeyCode.Space;
             PlayerParticle.Stop();
         }
-        
+
 
 
         if (isMoving == false)
         {
             PacMove.Stop();
-            if (lastInput == KeyCode.D){
+            if (lastInput == KeyCode.D)
+            {
                 endPoint = transform.position + new Vector3(TileSize.x, 0, 0);
                 StartCoroutine(Move());
                 lastInput = KeyCode.D; // I feel like currentInput is unnecessary. If i find any problems with this system ill add CurrentInput and find a solution using it. 
-            } 
+            }
         }
-        
+
         {
             if (lastInput == KeyCode.A)
             {
                 endPoint = transform.position + new Vector3(-TileSize.x, 0, 0);
                 StartCoroutine(Move());
                 lastInput = KeyCode.A;
-                
+
             }
         }
-       
+
         {
             if (lastInput == KeyCode.W)
             {
                 endPoint = transform.position + new Vector3(0, TileSize.y, 0);
                 StartCoroutine(Move());
                 lastInput = KeyCode.W;
-                
+
             }
         }
-        
+
         {
             if (lastInput == KeyCode.S)
             {
@@ -138,27 +140,27 @@ public class PacStudentController : MonoBehaviour
         {
             isMoving = false;
         }
-        
+
     }
 
     IEnumerator Move()
     {
-        if(isMoving)
+        if (isMoving)
         {
             yield break;
         }
         isMoving = true;
         Vector3 startPoint = transform.position;
         while (MoveToPoint(startPoint)) { yield return null; }
-        
 
-        
+
+
 
         isMoving = false;
     }
     bool MoveToPoint(Vector3 StartPoint)
     {
-        
+
         return endPoint != (transform.position = Vector3.MoveTowards(transform.position, endPoint, moveSpeed * Time.deltaTime));
     }
 
@@ -167,6 +169,17 @@ public class PacStudentController : MonoBehaviour
     {
         PlayerParticle.Play();
     }
+
+    private void OnCollisionStay2D(Collision2D Wall)
+    {
+        if (Wall.gameObject.CompareTag("Arena"))
+        {
+            //isMoving = false;
+            Debug.Log("Collision Stay : " + Wall);
+            PlayerParticle.Stop();
+        }
+    }
+
 }
 
 
