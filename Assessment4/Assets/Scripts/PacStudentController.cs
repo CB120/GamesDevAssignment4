@@ -14,8 +14,10 @@ public class PacStudentController : MonoBehaviour
     private AudioSource PacMove;
     public ParticleSystem PlayerParticle;
     public GameObject Wall;
+    private AudioSource PacCollide;
+    public GameObject pellet;
 
-    private void CheckLastInput() // I wish this would work. :(
+    private void CheckLastInput() // This didnt fully work :(
     {
         if (Input.anyKeyDown)
         {
@@ -38,6 +40,7 @@ public class PacStudentController : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
         PacMove = gameObject.GetComponent<AudioSource>();
         anim.StopPlayback();
+        PacCollide = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -172,12 +175,19 @@ public class PacStudentController : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D Wall)
     {
+        
         if (Wall.gameObject.CompareTag("Arena"))
         {
             //isMoving = false;
             Debug.Log("Collision Stay : " + Wall);
             PlayerParticle.Stop();
+            PacCollide.Play();
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D Pellet)
+    {
+        Destroy(pellet);
     }
 
 }
