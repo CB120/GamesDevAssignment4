@@ -185,10 +185,13 @@ public class PacStudentController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D Pellet)
+    private void OnTriggerEnter(Collider pellet)
     {
-        Destroy(pellet);
+        Debug.Log("Test Pellet");
+        Destroy(gameObject);
     }
+    
+    
 
 }
 
