@@ -10,7 +10,8 @@ public class PacStudentController : MonoBehaviour
     private float moveSpeed = 2f;
     private KeyCode lastInput;
     public Vector2 TileSize;
-
+    private Animator anim;
+    private AudioSource PacMove;
 
     private void CheckLastInput() // I wish this would work. :(
     {
@@ -20,14 +21,21 @@ public class PacStudentController : MonoBehaviour
             Debug.Log(lastInput);
             
         }
-    } 
+    }
 
+    private void PacMoveAudio()
+    { 
+            PacMove.loop = true;
+            PacMove.Play();
+    }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = gameObject.GetComponent<Animator>();
+        PacMove = gameObject.GetComponent<AudioSource>();
+        anim.StopPlayback();
     }
 
     // Update is called once per frame
@@ -36,10 +44,14 @@ public class PacStudentController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.D))
         {
-            //isMoving = true;
+            
             endPoint = transform.position + new Vector3(TileSize.x, 0, 0);
             StartCoroutine(Move());
             lastInput = KeyCode.D;
+            anim.Play("PlayerAnim");
+            PacMoveAudio();
+
+
         }
 
 
@@ -49,6 +61,7 @@ public class PacStudentController : MonoBehaviour
             endPoint = transform.position + new Vector3(-TileSize.x, 0, 0);
             StartCoroutine(Move());
             lastInput = KeyCode.A;
+            PacMoveAudio();
         }
         
         if (Input.GetKeyDown(KeyCode.W))
@@ -56,6 +69,7 @@ public class PacStudentController : MonoBehaviour
             endPoint = transform.position + new Vector3(0, TileSize.y, 0);
             StartCoroutine(Move());
             lastInput = KeyCode.W;
+            PacMoveAudio();
         }
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -63,16 +77,21 @@ public class PacStudentController : MonoBehaviour
             endPoint = transform.position + new Vector3(0, -TileSize.y, 0);
             StartCoroutine(Move());
             lastInput = KeyCode.S;
+            PacMoveAudio();
         }
 
         CheckLastInput();
+        
+        
+
 
         if (isMoving == false)
         {
+            //PacMove.Stop();
             if (lastInput == KeyCode.D){
                 endPoint = transform.position + new Vector3(TileSize.x, 0, 0);
                 StartCoroutine(Move());
-                lastInput = KeyCode.D;
+                lastInput = KeyCode.D; // I feel like currentInput is unnecessary. If i find any problems with this system ill add CurrentInput and find a solution using it. 
             } 
         }
         
@@ -82,6 +101,7 @@ public class PacStudentController : MonoBehaviour
                 endPoint = transform.position + new Vector3(-TileSize.x, 0, 0);
                 StartCoroutine(Move());
                 lastInput = KeyCode.A;
+                
             }
         }
        
@@ -91,6 +111,7 @@ public class PacStudentController : MonoBehaviour
                 endPoint = transform.position + new Vector3(0, TileSize.y, 0);
                 StartCoroutine(Move());
                 lastInput = KeyCode.W;
+                
             }
         }
         
@@ -102,6 +123,7 @@ public class PacStudentController : MonoBehaviour
                 lastInput = KeyCode.S;
             }
         }
+        
     }
 
     IEnumerator Move()
@@ -110,16 +132,18 @@ public class PacStudentController : MonoBehaviour
         {
             yield break;
         }
-
         isMoving = true;
         Vector3 startPoint = transform.position;
         while (MoveToPoint(startPoint)) { yield return null; }
+        
+
         
 
         isMoving = false;
     }
     bool MoveToPoint(Vector3 StartPoint)
     {
+        
         return endPoint != (transform.position = Vector3.MoveTowards(transform.position, endPoint, moveSpeed * Time.deltaTime));
     }
 }

@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     public Text timer;
     public void LoadMenuScreen()
     {
-            SceneManager.LoadScene(1);    
+        SceneManager.LoadScene(1);    
     }
 
     public void LoadLevelOne()
@@ -92,7 +92,7 @@ public class UIManager : MonoBehaviour
                 timer.text = minutes.ToString("00") + ":" + seconds.ToString("00") + ":" + milliseconds.ToString("00");
             }
         }
-        // FIX THIS ALL UP PLEASE
+        
        
 
     }
