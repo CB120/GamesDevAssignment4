@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour
             Button btn3 = GameObject.FindGameObjectWithTag("Exit").GetComponent<Button>();
             btn3.onClick.AddListener(ExitGame);
         }
-
+            
         
     }
 
@@ -79,6 +79,9 @@ public class UIManager : MonoBehaviour
         }
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(2))
         {
+            Button btn3 = GameObject.FindGameObjectWithTag("Exit").GetComponent<Button>();
+            btn3.onClick.AddListener(ExitGame);
+
             if (gameObject == GameObject.FindGameObjectWithTag("Score")) // This fixed a nullReference error. There is probs a more efficient way to do this lol
             {
                 score.text = "Score: " + ScoreValue;
@@ -92,8 +95,12 @@ public class UIManager : MonoBehaviour
                 timer.text = minutes.ToString("00") + ":" + seconds.ToString("00") + ":" + milliseconds.ToString("00");
             }
         }
-        
-       
 
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(3))
+        {
+            Button btn3 = GameObject.FindGameObjectWithTag("Exit").GetComponent<Button>();
+            btn3.onClick.AddListener(ExitGame);
+
+        }
     }
 }
