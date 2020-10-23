@@ -12,6 +12,7 @@ public class PacStudentController : MonoBehaviour
     public Vector2 TileSize;
     private Animator anim;
     private AudioSource PacMove;
+    public ParticleSystem PlayerParticle;
 
     private void CheckLastInput() // I wish this would work. :(
     {
@@ -50,7 +51,7 @@ public class PacStudentController : MonoBehaviour
             lastInput = KeyCode.D;
             anim.Play("PlayerAnim");
             PacMoveAudio();
-
+            PacStudentDust();
 
         }
 
@@ -62,6 +63,7 @@ public class PacStudentController : MonoBehaviour
             StartCoroutine(Move());
             lastInput = KeyCode.A;
             PacMoveAudio();
+            PacStudentDust();
         }
         
         if (Input.GetKeyDown(KeyCode.W))
@@ -70,6 +72,7 @@ public class PacStudentController : MonoBehaviour
             StartCoroutine(Move());
             lastInput = KeyCode.W;
             PacMoveAudio();
+            PacStudentDust();
         }
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -78,16 +81,23 @@ public class PacStudentController : MonoBehaviour
             StartCoroutine(Move());
             lastInput = KeyCode.S;
             PacMoveAudio();
+            PacStudentDust();
         }
 
         CheckLastInput();
-        
+
+        if (Input.GetKeyDown(KeyCode.Space)) // Just for testing purposes
+        {
+            isMoving = false;
+            lastInput = KeyCode.Space;
+            PlayerParticle.Stop();
+        }
         
 
 
         if (isMoving == false)
         {
-            //PacMove.Stop();
+            PacMove.Stop();
             if (lastInput == KeyCode.D){
                 endPoint = transform.position + new Vector3(TileSize.x, 0, 0);
                 StartCoroutine(Move());
@@ -123,6 +133,11 @@ public class PacStudentController : MonoBehaviour
                 lastInput = KeyCode.S;
             }
         }
+
+        if (lastInput == KeyCode.Space) // Just for testing purposes
+        {
+            isMoving = false;
+        }
         
     }
 
@@ -146,4 +161,12 @@ public class PacStudentController : MonoBehaviour
         
         return endPoint != (transform.position = Vector3.MoveTowards(transform.position, endPoint, moveSpeed * Time.deltaTime));
     }
+
+
+    void PacStudentDust()
+    {
+        PlayerParticle.Play();
+    }
 }
+
+
